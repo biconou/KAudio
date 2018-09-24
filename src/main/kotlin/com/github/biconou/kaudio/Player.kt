@@ -3,7 +3,7 @@ package com.github.biconou.kaudio
 import com.github.biconou.kaudio.channel.ControlChannel
 import com.github.biconou.kaudio.channel.DataChannel
 import com.github.biconou.kaudio.audio.system.findMixerByName
-import com.github.biconou.kaudio.audio.format.supportedAudioFormats
+import com.github.biconou.kaudio.audio.format.SupportedAudioFormats
 import com.github.biconou.kaudio.channel.ControlMessageType
 import com.github.biconou.kaudio.channel.DataMessageType
 import org.slf4j.LoggerFactory
@@ -59,7 +59,7 @@ class Player(playerName: String) {
                 val dataMessage = dataChannel.pull()
                 when (dataMessage.type) {
                     DataMessageType.BEGIN -> {
-                        val format = supportedAudioFormats.findFormat(dataMessage.audioFormat)
+                        val format = SupportedAudioFormats.findFormat(dataMessage.audioFormat)
                         if (format != null) {
                             prepareSourceDataLine(format)
                         } else {

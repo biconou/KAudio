@@ -16,7 +16,7 @@ class PlayerBuilder(playerName: String) {
             controlChannel = RemoteControlChannelAdapter(host)
             dataChannel = RemoteDataChannelAdapter(host)
         } else {
-            dataChannel = LocalDataChannel()
+            dataChannel = LocalDataChannel(10)
             controlChannel = LocalControlChannel()
             player = Player(playerName)
             /* player.bindControlChannel(controlChannel)

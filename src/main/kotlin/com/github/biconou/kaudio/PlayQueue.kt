@@ -6,6 +6,7 @@ import com.github.biconou.audioplayer.legacy.audiostreams.ffmpeg.AudioInputStrea
 import com.github.biconou.kaudio.channel.ControlChannel
 import com.github.biconou.kaudio.channel.DataChannel
 import com.github.biconou.kaudio.audio.format.computeFormatKey
+import com.github.biconou.kaudio.audio.system.getPCMAudioInputStream
 import com.github.biconou.kaudio.channel.DataMessage
 import com.github.biconou.kaudio.channel.DataMessageType
 import org.slf4j.LoggerFactory
@@ -66,22 +67,21 @@ class PlayQueue : Logging {
         this.dataChannel = dataChannel
         dataProductionThread = thread(start = true, name = "PlayQueue_producerThread") {
             while (true) {
-                items.take().run {
+                items.take().apply {
                     log.debug("PlayQueue : start sending DATA for {}", this)
-                    val audioStream = AudioInputStreamUtils.getPCMAudioInputStream(this.toFile())
+                    val audioStream = getPCMAudioInputStream(toFile())
 
-                    dataChannel?.begin(audioStream.format.computeFormatKey())
+                    dataChannel.begin(audioStream.format.computeFormatKey())
 
                     // TODO faire de buffer un extension property
                     val buffer = ByteArray(audioStream.bytesPerSecond)
                     do {
-                        // readOneSecond extension fuction
                         val bytesActuallyRead = audioStream.readOneSecond(buffer)
                         if (bytesActuallyRead > 0) dataChannel?.push(DataMessage(audioStream.format.computeFormatKey(), buffer.copyOf(), bytesActuallyRead, DataMessageType.DATA))
                     } while (bytesActuallyRead > 0)
 
                     // End of item AudioStream as been reached
-                    dataChannel?.end(audioStream.format.computeFormatKey())
+                    dataChannel.end(audioStream.format.computeFormatKey())
 
                     log.debug("PlayQueue : end sending for {}", this)
                 }

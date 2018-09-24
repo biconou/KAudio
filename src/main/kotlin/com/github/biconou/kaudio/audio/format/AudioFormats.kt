@@ -16,8 +16,8 @@ fun AudioFormat.computeFormatKey(): String {
     return sb.toString()
 }
 
-object supportedAudioFormats {
-    val formats = listOf(
+object SupportedAudioFormats {
+    private val formats = listOf(
             AudioFormat(
                     AudioFormat.Encoding.PCM_SIGNED,
                     44100.toFloat(),
@@ -39,4 +39,28 @@ object supportedAudioFormats {
     fun findFormat(formatKey: String): AudioFormat? {
         return formatsMap[formatKey]
     }
+}
+
+fun convertToPCMAudioFormat(sourceFormat: AudioFormat): AudioFormat {
+    var targetFormat = sourceFormat
+    if (sourceFormat.encoding != AudioFormat.Encoding.PCM_SIGNED) {
+        val targetFrameRate = sourceFormat.sampleRate
+        var targetSampleSizeInBits = sourceFormat.sampleSizeInBits
+        if (targetSampleSizeInBits == -1) {
+            targetSampleSizeInBits = 16
+        }
+        val targetChannels = sourceFormat.channels
+        val targetFrameSize = targetChannels * targetSampleSizeInBits / 8
+
+        targetFormat = AudioFormat(
+                AudioFormat.Encoding.PCM_SIGNED,
+                sourceFormat.sampleRate,
+                targetSampleSizeInBits,
+                targetChannels,
+                targetFrameSize,
+                targetFrameRate,
+                false)
+
+    }
+    return targetFormat
 }

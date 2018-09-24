@@ -2,9 +2,9 @@ package com.github.biconou.kaudio.channel
 
 import java.util.concurrent.LinkedBlockingQueue
 
-class LocalDataChannel : DataChannel {
+class LocalDataChannel(capacity: Int) : DataChannel {
 
-    private val queue = LinkedBlockingQueue<DataMessage>(10)
+    private val queue = LinkedBlockingQueue<DataMessage>(capacity)
 
     override fun push(audioDataMessage: DataMessage) {
         queue.put(audioDataMessage)

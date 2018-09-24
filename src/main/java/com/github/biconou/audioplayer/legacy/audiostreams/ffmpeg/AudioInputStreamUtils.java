@@ -121,6 +121,7 @@ public class AudioInputStreamUtils {
      * @return
      * @throws Exception
      */
+    @Deprecated
     public static AudioInputStream getPCMAudioInputStream(File file) throws Exception {
         AudioInputStream sourceAudioInputStream;
         AudioInputStream targetAudioInputStream;
@@ -174,11 +175,13 @@ public class AudioInputStreamUtils {
         }
     }
 
+    @Deprecated
     public static int computeBytesPerSecond(AudioInputStream stream) {
         return (int) stream.getFormat().getSampleRate() * stream.getFormat().getFrameSize();
     }
 
 
+    @Deprecated
     public static int readOneSecond(AudioInputStream stream, byte[] buffer, int bytesPerSecond) throws IOException {
         int bytes;
         int totalBytesRead = 0;
