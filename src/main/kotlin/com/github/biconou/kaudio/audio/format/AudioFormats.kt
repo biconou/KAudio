@@ -16,17 +16,19 @@ fun AudioFormat.computeFormatKey(): String {
     return sb.toString()
 }
 
+val PCM_44100_16_LE = AudioFormat(
+        AudioFormat.Encoding.PCM_SIGNED,
+        44100.toFloat(),
+        16,
+        2,
+        4,
+        44100.toFloat(),
+        false)
+
+val defaultAudioFormat = PCM_44100_16_LE
+
 object SupportedAudioFormats {
-    private val formats = listOf(
-            AudioFormat(
-                    AudioFormat.Encoding.PCM_SIGNED,
-                    44100.toFloat(),
-                    16,
-                    2,
-                    4,
-                    44100.toFloat(),
-                    false)
-    )
+    private val formats = listOf(PCM_44100_16_LE)
 
     private val formatsMap = mutableMapOf<String, AudioFormat>()
 

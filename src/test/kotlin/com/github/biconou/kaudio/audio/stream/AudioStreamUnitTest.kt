@@ -10,15 +10,16 @@ import org.junit.jupiter.api.Test
 class AudioStreamUnitTest {
 
 
-    private val audioInputStream = getPCMAudioInputStream(TestResourcesUtils.resolveFile("/WAV/naim-test-2-wav-16-44100.wav"))
 
     @Test
     fun oneSecondAudio_WAV_16_44100() {
+        val audioInputStream = getPCMAudioInputStream(TestResourcesUtils.resolveFile("/WAV/naim-test-2-wav-16-44100.wav"))
         assert(audioInputStream.bytesPerSecond).isEqualTo(176400)
     }
 
     @Test
     fun readPerSeconds_WAV_16_44100() {
+        val audioInputStream = getPCMAudioInputStream(TestResourcesUtils.resolveFile("/WAV/naim-test-2-wav-16-44100.wav"))
         val packetSizes = ArrayList<Int>()
         val buffer = ByteArray(audioInputStream.bytesPerSecond)
         do {

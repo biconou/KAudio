@@ -6,4 +6,4 @@ enum class DataMessageType {
     BEGIN, END, DATA
 }
 
-data class DataMessage(val audioFormat: String, val data: ByteArray?, val lengthInBytes: Int, val type: DataMessageType) : Serializable
+data class DataMessage(val audioFormat: String, val data: ByteArray, val lengthInBytes: Int, val type: DataMessageType) : Serializable

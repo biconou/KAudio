@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject
 class RemoteDataChannelImpl : UnicastRemoteObject(), RemoteDataChannel {
 
     val localDataChannel = LocalDataChannel(10)
+    private val dummyData = ByteArray(0)
 
     override fun push(audioDataMessage: DataMessage) {
         localDataChannel.push(audioDataMessage)
@@ -19,10 +20,10 @@ class RemoteDataChannelImpl : UnicastRemoteObject(), RemoteDataChannel {
     }
 
     override fun begin(audioFormatKey: String) {
-        localDataChannel.push(DataMessage(audioFormatKey, null, 0, DataMessageType.BEGIN))
+        localDataChannel.push(DataMessage(audioFormatKey, dummyData, 0, DataMessageType.BEGIN))
     }
 
     override fun end(audioFormatKey: String) {
-        localDataChannel.push(DataMessage(audioFormatKey, null, 0, DataMessageType.END))
+        localDataChannel.push(DataMessage(audioFormatKey, dummyData, 0, DataMessageType.END))
     }
 }

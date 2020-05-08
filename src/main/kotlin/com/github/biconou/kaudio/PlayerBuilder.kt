@@ -1,6 +1,8 @@
 package com.github.biconou.kaudio
 
 import com.github.biconou.kaudio.channel.*
+import com.github.biconou.kaudio.player.Player
+import com.github.biconou.kaudio.player.RealAudioDeviceAdapter
 
 
 class PlayerBuilder(playerName: String) {
@@ -18,9 +20,7 @@ class PlayerBuilder(playerName: String) {
         } else {
             dataChannel = LocalDataChannel(10)
             controlChannel = LocalControlChannel()
-            player = Player(playerName)
-            /* player.bindControlChannel(controlChannel)
-            player.bindDataChannel(dataChannel) */
+            player = Player(RealAudioDeviceAdapter(playerName))
         }
     }
 }

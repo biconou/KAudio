@@ -6,6 +6,8 @@ class LocalDataChannel(capacity: Int) : DataChannel {
 
     private val queue = LinkedBlockingQueue<DataMessage>(capacity)
 
+    private val dummyData = ByteArray(0)
+
     override fun push(audioDataMessage: DataMessage) {
         queue.put(audioDataMessage)
     }
@@ -19,10 +21,10 @@ class LocalDataChannel(capacity: Int) : DataChannel {
     }
 
     override fun begin(audioFormatKey: String) {
-        push(DataMessage(audioFormatKey, null, 0, DataMessageType.BEGIN))
+        push(DataMessage(audioFormatKey, dummyData, 0, DataMessageType.BEGIN))
     }
 
     override fun end(audioFormatKey: String) {
-        push(DataMessage(audioFormatKey, null, 0, DataMessageType.END))
+        push(DataMessage(audioFormatKey, dummyData, 0, DataMessageType.END))
     }
 }
